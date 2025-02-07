@@ -1,0 +1,10 @@
+<select
+  title="select"
+  name="select"
+  (change)="onCategoryChange(selectRef.value)"
+  #selectRef
+>
+  @for (cat of categories; track cat) {
+  <option [value]="cat" class="text-gray-700">{{ cat }}</option>
+  }
+</select>

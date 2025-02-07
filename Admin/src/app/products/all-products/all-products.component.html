@@ -1,0 +1,259 @@
+<button
+  class="bg-green-600 px-3 py-1 rounded-md text-white mt-8 relative left-1/2 -translate-x-1/2"
+  (click)="showAddProduct()"
+>
+  Add A New Product
+</button>
+
+<table
+  class="min-w-full bg-white border border-grey-200 rounded-lg mt-10 mb-12"
+>
+  <thead class="bg-slate-50">
+    <tr>
+      <th class="py-5 px-3 text-center">Image</th>
+      <th class="py-5 px-3 text-center">Name</th>
+      <th class="py-5 px-3 text-center">Category</th>
+      <th class="py-5 px-3 text-center">Price</th>
+      <th class="py-5 px-3 text-center"></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (product of products; track product.id) {
+    <tr class="border-b-2 border-slate-300">
+      <td class="py-2 px-4 text-center">
+        <img
+          [src]="product.image"
+          alt="Product Image"
+          class="w-20 h-20 object-cover text-center"
+        />
+      </td>
+      <td class="py-2 px-4 text-center text-sm max-w-44">
+        {{ product.title }}
+      </td>
+      <td class="py-2 px-4 text-center">{{ product.category }}</td>
+      <td class="py-2 px-4 text-center">
+        {{ product.price.toFixed(2) }}
+        L.E
+      </td>
+      <td>
+        <button
+          class="px-2 py-1 bg-red-600 rounded-md text-white"
+          (click)="editProduct(product)"
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+@if(showingAddProduct){
+<section
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20"
+>
+  <div class="details w-3/4 max-w-4xl h-auto bg-white p-6 rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold relative left-1/2 -translate-x-1/2">
+        Add A New Product
+      </h2>
+      <button
+        class="px-4 py-2 bg-red-600 text-white rounded-md"
+        (click)="closeAddProduct()"
+      >
+        Close
+      </button>
+    </div>
+    <form [formGroup]="form">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-2">
+          <label for="title" class="block text-sm font-medium text-gray-700"
+            >Title</label
+          >
+          <input
+            formControlName="title"
+            id="title"
+            type="text"
+            class="mt-1 px-2 py-1 block w-full rounded-md border-2 border-gray-200 focus:outline-none"
+          />
+        </div>
+
+        <div class="col-span-2">
+          <label for="image" class="block text-sm font-medium text-gray-700">
+            Image URL</label
+          >
+          <input
+            formControlName="imageURL"
+            id="image"
+            type="text"
+            class="mt-1 block w-full rounded-md border-2 border-gray-200 focus:outline-none px-2 py-1"
+          />
+        </div>
+
+        <div class="col-span-1">
+          <label for="price" class="block text-sm font-medium text-gray-700"
+            >Price</label
+          >
+          <input
+            formControlName="price"
+            id="price"
+            type="number"
+            class="mt-1 block w-full rounded-md border-2 border-gray-200 focus:outline-none px-2 py-1"
+          />
+        </div>
+
+        <div class="col-span-1">
+          <label for="category" class="block text-sm font-medium text-gray-700"
+            >Category</label
+          >
+          <select
+            formControlName="category"
+            class="mt-1 block w-full rounded-md border-2 border-gray-200 focus:outline-none px-2 py-1"
+          >
+            <option value="">Select a category</option>
+            <option value="men's clothing">Men's Clothing</option>
+            <option value="jewelries">Jewelries</option>
+            <option value="electronics">Electronics</option>
+            <option value="women's clothing">Women's Clothing</option>
+          </select>
+        </div>
+
+        <div class="col-span-2">
+          <label
+            for="description"
+            class="block text-sm font-medium text-gray-700"
+            >Description</label
+          >
+          <textarea
+            formControlName="Description"
+            id="description"
+            rows="4"
+            class="mt-1 block w-full rounded-md px-2 py-1 border-2 border-gray-200 focus:outline-none"
+          ></textarea>
+        </div>
+      </div>
+      <div class="mt-4 flex justify-center">
+        <button
+          [disabled]="!form.valid"
+          (click)="addProduct()"
+          type="submit"
+          class="px-4 py-2 bg-green-600 text-white rounded-md"
+        >
+          Add Product
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+}
+
+<span></span>
+@if (editingProduct) {
+<section
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20"
+>
+  <div class="details w-3/4 max-w-4xl h-auto bg-white p-6 rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold relative left-1/2 -translate-x-1/2">
+        Edit Product
+      </h2>
+      <button
+        class="px-4 py-2 bg-red-600 text-white rounded-md"
+        (click)="closeAddProduct()"
+      >
+        Close
+      </button>
+    </div>
+    <form [formGroup]="editForm">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-2">
+          <label for="title" class="block text-sm font-medium text-gray-700"
+            >Title</label
+          >
+          <input
+            formControlName="title"
+            id="title"
+            type="text"
+            class="mt-1 px-2 py-1 block w-full rounded-md border-2 border-gray-200 focus:outline-none"
+          />
+        </div>
+
+        <div class="col-span-2">
+          <label for="image" class="block text-sm font-medium text-gray-700"
+            >New Image URL</label
+          >
+          <input
+            formControlName="imageURL"
+            id="image"
+            type="text"
+            placeholder="Enter new image URL or leave blank to keep the current one"
+            class="mt-1 block w-full rounded-md border-2 border-gray-200 focus:outline-none px-2 py-1"
+          />
+          <div class="mt-2 flex items-center">
+            <input
+              type="checkbox"
+              id="keepImage"
+              (change)="toggleKeepCurrentImage($event)"
+              [checked]="keepCurrentImage"
+              class="mr-2"
+            />
+            <label for="keepImage" class="text-sm text-gray-600"
+              >Keep current image</label
+            >
+          </div>
+        </div>
+
+        <div class="col-span-1">
+          <label for="price" class="block text-sm font-medium text-gray-700"
+            >Price</label
+          >
+          <input
+            formControlName="price"
+            id="price"
+            type="number"
+            class="mt-1 block w-full rounded-md border-2 border-gray-200 focus:outline-none px-2 py-1"
+          />
+        </div>
+
+        <div class="col-span-1">
+          <label for="category" class="block text-sm font-medium text-gray-700"
+            >Category</label
+          >
+          <select
+            formControlName="category"
+            class="mt-1 block w-full rounded-md border-2 border-gray-200 focus:outline-none px-2 py-1"
+          >
+            <option value="men's clothing">Men's Clothing</option>
+            <option value="jewelery">jewelery</option>
+            <option value="electronics">Electronics</option>
+            <option value="women's clothing">Women's Clothing</option>
+          </select>
+        </div>
+
+        <div class="col-span-2">
+          <label
+            for="description"
+            class="block text-sm font-medium text-gray-700"
+            >Description</label
+          >
+          <textarea
+            formControlName="Description"
+            id="description"
+            rows="4"
+            class="mt-1 block w-full rounded-md px-2 py-1 border-2 border-gray-200 focus:outline-none"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="mt-4 flex justify-center">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-green-600 text-white rounded-md"
+        >
+          Edit Product
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+}

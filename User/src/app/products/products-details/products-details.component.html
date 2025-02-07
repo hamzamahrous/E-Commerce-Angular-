@@ -1,0 +1,17 @@
+@if (isLoading) {
+<app-spinner></app-spinner>
+} @else {
+<div class="flex flex-col md:flex-row justify-center items-center gap-12 m-12">
+  <img [src]="product?.image" alt="Product Image" class="w-2/3 md:w-1/2" />
+  <div class="details flex flex-col gap-5">
+    <p><span class="font-bold">Title:</span> {{ product?.title }}</p>
+    <p><span class="font-bold">Category:</span> {{ product?.category }}</p>
+    <p class="leading-6">
+      <span class="font-bold">Description:</span> {{ product?.description }}
+    </p>
+    <p><span class="font-bold">Rate:</span> {{ product?.rating?.rate }}</p>
+    <p><span class="font-bold">Count:</span> {{ product?.rating?.count }}</p>
+    <p><span class="font-bold">Price:</span> {{ product?.price }} LE</p>
+  </div>
+</div>
+}

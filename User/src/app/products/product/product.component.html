@@ -1,0 +1,57 @@
+<div class="item shadow-md rounded-lg">
+  <img
+    [src]="product.image"
+    alt="Product Image"
+    class="rounded-lg h-44 w-full object-fill"
+  />
+  <div class="body">
+    <h4
+      class="bg-gray-300 px-4 py-6 text-gray-950 text-base font-semibold h-[90px] md:h-[150px] flex justify-center items-center"
+    >
+      {{ product.title }}
+    </h4>
+    <p
+      class="p-6 pt-8 my-6 leading-relaxed flex-col justify-center items-center text-gray-600 h-52 text-sm overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300"
+    >
+      {{ product.description }}
+
+      <button
+        class="bg-button-grey text-white p-1 rounded-md m-2 text-sm"
+        (click)="loadProductDetails()"
+      >
+        See Product Details
+      </button>
+    </p>
+  </div>
+  <div class="px-6 pb-2 text-sm flex justify-center items-center gap-4">
+    @if (!addButton) {
+    <button
+      class="bg-green-700 text-white rounded-md px-3 py-2 -ml-2"
+      (click)="addButton = true"
+    >
+      Add To Cart
+    </button>
+    } @else{
+    <div class="flex gap-1 w-1/2">
+      <input
+        #inputField
+        min="0"
+        type="number"
+        name="quantity"
+        class="w-2/3 focus:outline-none text-center"
+        [(ngModel)]="amount"
+      />
+      <button
+        class="bg-red-600 text-white text-sm rounded-lg px-2 py-1"
+        (click)="addToCart()"
+      >
+        Add
+      </button>
+    </div>
+    }
+    <span
+      class="bg-red-600 text-white font-semibold rounded-lg px-2 py-2 -mr-3"
+      >{{ product.price | currency : "USD" : "symbol" : "1.2-2" }}</span
+    >
+  </div>
+</div>

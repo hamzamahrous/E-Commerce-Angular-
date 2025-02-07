@@ -1,0 +1,22 @@
+<div class="py-12 flex justify-center items-center gap-2">
+  <app-select
+    [title]="'Categories '"
+    [categories]="categories"
+    (categoryChange)="onCategoryChange($event)"
+  ></app-select>
+</div>
+
+@if(isLoading){
+<app-spinner></app-spinner>
+} @else {
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-center mb-12"
+>
+  @for (product of products; track product.id) {
+  <app-product
+    [product]="product"
+    (itemAdded)="addItemToLocalStorage($event)"
+  ></app-product>
+  }
+</div>
+}
